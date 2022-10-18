@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+@*<div class="text-center">
+   @* <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
+
+</div>*@
+
+<div class="jumbotron" >
+
+
+    <h1>Mis discos de Vivi en ASP.NET</h1>
+    <p class="lead">Todo para tener tus discos organizados.</p>
+    <p><a href="@Url.Action("Error","Home")" class="btn btn-primary btn-lg">Admin</a></p>
+
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Álbumes</h2>
+        <p>
+            <a class="btn btn-default" href="@Url.Action("Index","Albums")">
+                <img src="Images/cat-balloon.jpg" alt="Discos" width="128" height="128"/>
+            </a>
+        </p>
+
+    </div>
+    <div class="col-md-4">
+        <h2>Artistas</h2>
+        <p>
+            <a class="btn btn-default" href="@Url.Action("Index","Artists")">
+                <img src="Images/cat-dancing.jpg" alt="Discos" width="128" height="128" />   
+            </a>
+        </p>
+
+    </div>
+    <div class="col-md-4">
+        <h2>Login</h2>
+        <p>
+            <a class="btn btn-default" href="@Url.Action("Login","Home")">
+                <img src="Images/cat-rope.jpg" alt="Discos" width="128" height="128" />
+            </a>
+        </p>
+
+    </div>
+
+</div>

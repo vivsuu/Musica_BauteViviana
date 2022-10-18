@@ -1,0 +1,26 @@
+﻿@model MusicaAut_BauteViviana.Models.Artist
+
+@{
+    ViewData["Title"] = "Borrar artista";
+}
+
+<h1>Borrar artista</h1>
+
+<h3>¿Estás seguro de que quieres borrar este artista?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Nombre
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ArtistId" />
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver a la lista</a>
+    </form>
+</div>

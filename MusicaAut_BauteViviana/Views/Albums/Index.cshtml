@@ -1,0 +1,42 @@
+﻿@model IEnumerable<MusicaAut_BauteViviana.Models.Album>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Crear nuevo álbum</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Título del álbum
+            </th>
+            <th>
+                Artista
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AlbumId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.AlbumId">Detalles</a> |
+                @*<a asp-action="Delete" asp-route-id="@item.AlbumId">Borrar</a> |*@
+                <a asp-action="GetTracks" asp-route-id="@item.ArtistId">Canciones del álbum</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

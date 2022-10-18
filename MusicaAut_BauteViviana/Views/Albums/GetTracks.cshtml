@@ -1,0 +1,29 @@
+﻿@model IEnumerable<MusicaAut_BauteViviana.Models.Track>
+
+@{
+    ViewData["Title"] = "GetTracks";
+}
+
+<h1>Canciones de </h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Título canción
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+
+
+        </tr>
+}
+    </tbody>
+</table>
