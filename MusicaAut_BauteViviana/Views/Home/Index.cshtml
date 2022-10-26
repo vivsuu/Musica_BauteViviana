@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
     ViewData["Title"] = "Home";
 }
 
@@ -14,7 +18,7 @@
 
     <h1>Mis discos de Vivi en ASP.NET</h1>
     <p class="lead">Todo para tener tus discos organizados.</p>
-    <p><a href="@Url.Action("Error","Home")" class="btn btn-primary btn-lg">Admin</a></p>
+    <p><a href="@Url.Action("Index","Admin")" class="btn btn-primary btn-lg">Admin</a></p>
 
 </div>
 <div class="row">
@@ -36,14 +40,16 @@
         </p>
 
     </div>
+@if (!SignInManager.IsSignedIn(User))
+{
     <div class="col-md-4">
         <h2>Login</h2>
         <p>
-            <a class="btn btn-default" href="@Url.Action("Login","Home")">
+            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">
                 <img src="Images/cat-rope.jpg" alt="Discos" width="128" height="128" />
             </a>
         </p>
 
     </div>
-
+}
 </div>

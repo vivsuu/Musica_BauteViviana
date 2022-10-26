@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +19,7 @@ namespace MusicaAut_BauteViviana.Controllers
         {
             _context = context;
         }
-
+        [Authorize]
         // GET: Artists
         public async Task<IActionResult> Index()
         {
@@ -41,13 +43,13 @@ namespace MusicaAut_BauteViviana.Controllers
 
             return View(artist);
         }
-
+        [Authorize(Roles = "Administrator, Manager")]
         // GET: Artists/Create
         public IActionResult Create()
         {
             return View();
         }
-
+        [Authorize(Roles = "Administrator, Manager")]
         // POST: Artists/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -62,7 +64,7 @@ namespace MusicaAut_BauteViviana.Controllers
             }
             return View(artist);
         }
-
+        [Authorize(Roles = "Administrator, Manager")]
         // GET: Artists/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -78,7 +80,7 @@ namespace MusicaAut_BauteViviana.Controllers
             }
             return View(artist);
         }
-
+        [Authorize(Roles = "Administrator, Manager")]
         // POST: Artists/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -92,7 +94,7 @@ namespace MusicaAut_BauteViviana.Controllers
             }
             return View(artist);
         }
-
+        [Authorize(Roles = "Administrator, Manager")]
         // GET: Artists/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -109,7 +111,7 @@ namespace MusicaAut_BauteViviana.Controllers
 
             return View(artist);
         }
-
+        [Authorize(Roles = "Administrator, Manager")]
         // POST: Artists/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

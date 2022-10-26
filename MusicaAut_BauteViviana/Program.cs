@@ -12,9 +12,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSqlServer<ChinookContext>(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 builder.Services.AddDbContext<AppAutContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AppAutContextConnection")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppAutContext>();
 var app = builder.Build();
 

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MusicaAut_BauteViviana.Models;
+using System.Data;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -10,21 +12,22 @@ namespace MusicaAut_BauteViviana.Controllers
     public class AlbumsController : Controller
     {
         private readonly ChinookContext _context;
-        public AlbumsController(ChinookContext context) //Con esta funcion 
+        public AlbumsController(ChinookContext context) 
         {
             _context = context;
         }
-
+        [Authorize]
         public IActionResult Index()
         {
-            return View(_context.Albums.OrderByDescending(Album => Album.AlbumId).Include(album => album.Artist).Take(15).ToList());
+            return View(_context.Albums.OrderByDescending(Album => Album.AlbumId).Include(album => album.Artist).Take(35).ToList());
         }
-
+        [Authorize(Roles = "Administrator, Manager")]
         public IActionResult Create(int? id)
         {
             ViewBag.ArtistId = new SelectList(_context.Artists, "ArtistId", "Name"); //Le estamos diciendo al ViewBag que necesitamos tanto el ArtistID como el Name 
             return View();
         }
+        [Authorize(Roles = "Administrator, Manager")]
         [HttpPost]
         public IActionResult Create(Album album)
         {
@@ -50,7 +53,7 @@ namespace MusicaAut_BauteViviana.Controllers
             }
 
             ViewBag.ArtistId = new SelectList(_context.Artists, "ArtistId", "Name");
-            var album = await _context.Albums
+            var album = await _context.Albums.Include(album => album.Artist) //Incluimos al artista para poder presentarlo en la vista.
                 .FirstOrDefaultAsync(m => m.AlbumId == id);
             if (album == null)
             {
@@ -59,7 +62,7 @@ namespace MusicaAut_BauteViviana.Controllers
 
             return View(album);
         }
-
+        [Authorize(Roles = "Administrator, Manager")]
         // GET: Ej:Albums/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -75,7 +78,7 @@ namespace MusicaAut_BauteViviana.Controllers
             }
             return View(artist);
         }
-
+        [Authorize(Roles = "Administrator, Manager")]
         // POST: Ej:Albums/Edit/5
         [HttpPost]
         public IActionResult Edit(Album album)
@@ -88,7 +91,7 @@ namespace MusicaAut_BauteViviana.Controllers
             }
             return View(album);
         }
-
+        [Authorize(Roles = "Administrator, Manager")]
         // GET: Ej:Albums/Delete/5
         public async Task<IActionResult> Delete(int? id) 
         {
@@ -105,7 +108,7 @@ namespace MusicaAut_BauteViviana.Controllers
 
             return View(album);
         }
-
+        [Authorize(Roles = "Administrator, Manager")]
         // POST: Albums/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -130,12 +133,11 @@ namespace MusicaAut_BauteViviana.Controllers
             return _context.Albums.Any(e => e.AlbumId == id);
         }
 
-        public IActionResult GetTracks(int? id, string name)
+        public IActionResult GetTracks(int? id)
         {
-            ViewBag.Id = id;
-            ViewBag.Name = name;
             List<Track> cancionesArtista = new List<Track>();
             cancionesArtista = _context.Tracks.Where(tracks => tracks.AlbumId == id).ToList();
+            ViewBag.Name = _context.Albums.Find(id).Title;
             return View(cancionesArtista);
         }
 
